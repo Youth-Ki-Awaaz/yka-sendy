@@ -3,9 +3,10 @@
 	$.fn.yka_sendy_form = function( options ){
 
 		return this.each(function(){
+			
 			var $form 	= $( this ),
-				$submit	= $form.find('[type=submit]'),
-				$status = $form.find('.sendy-status');
+			$submit	= $form.find('[type=submit]'),
+			$status = $form.find('.sendy-status');
 
 
 			function subscribe() {
@@ -18,6 +19,7 @@
 				listId = $form.find('input[name="list"]').val(),
 				responseType = $form.find('input[name="boolean"]').val();
 
+			
 				var data = { 
 					name:name, 
 					email:email, 
@@ -26,10 +28,8 @@
 					list:listId,
 					boolean:responseType
 				};
-				
-				$status.html("Form Submitted");return;
-				//console.log(data);return;
-				
+
+
 				$.post(
 					url, 
 					data, 
@@ -52,6 +52,7 @@
 					      	else {
 						      	msg = "You're subscribed!";
 					      	}
+					      	
 					      	$status.html(msg);
 					    }
 					    else {
@@ -59,21 +60,18 @@
 					    }
 				  }
 				);
-
-
 			}	
 
 
 			$form.submit( function( ev ){
+			
 				ev.preventDefault();
-				
-				subscribe();
-				
+				subscribe();				
+			
 			});
 
-
 		});
-
+		
 	};
 	
 
