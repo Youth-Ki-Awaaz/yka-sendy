@@ -1,5 +1,5 @@
 
-<form method="POST" data-behaviour="yka-sendy-form" data-url="https://newsletters.youthkiawaaz.com/subscribe"  >
+<form method="POST" data-behaviour="yka-sendy-form" data-url="<?php _e($ajax_url);?>" content="text/html; charset=utf-8" >
 
 	<div class="form-group">
     	<input type="name" name="name" class="form-control" placeholder="Name" required>
@@ -32,7 +32,6 @@
 	
 	<div>
 		<input type="hidden" name="list" value="<?php _e($args['id']);?>"/>
-		<input type="hidden" name="boolean" value="true"/> <!-- Returns Plain Text Response-->
 	</div>
 	<div>
 		<button type="submit" class="btn btn-primary sendy-sub-btn">Subscribe</button>

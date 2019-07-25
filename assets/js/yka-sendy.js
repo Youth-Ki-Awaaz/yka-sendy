@@ -16,17 +16,15 @@
 				state = $form.find('select[name="State"]').children("option:selected").val(),
 				lang = $form.find('input[name="Preferredlanguage"]:checked').val(),
 				url = $form.data('url'),
-				listId = $form.find('input[name="list"]').val(),
-				responseType = $form.find('input[name="boolean"]').val();
+				listId = $form.find('input[name="list"]').val();
+				
 
-			
 				var data = { 
 					name:name, 
 					email:email, 
-					State:state, 
-					Preferredlanguage:lang,
-					list:listId,
-					boolean:responseType
+					state:state, 
+					lang:lang,
+					list:listId
 				};
 
 
@@ -71,7 +69,7 @@
 			});
 
 		});
-		
+
 	};
 	
 
