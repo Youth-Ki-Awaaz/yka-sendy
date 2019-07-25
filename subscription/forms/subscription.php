@@ -21,21 +21,21 @@
   	<div class="form-group space-one">
   		<label>Preferred Language </label>
 
-		<label class="checkbox-inline">
-			<input type="checkbox" name="Preferredlanguage[]" value="english"> English
+		<label class="radio-inline">
+			<input type="radio" name="Preferredlanguage" value="english"> English
 		</label>
 		
-		<label class="checkbox-inline">
-			<input type="checkbox" name="Preferredlanguage[]" value="hindi"> Hindi
+		<label class="radio-inline">
+			<input type="radio" name="Preferredlanguage" value="hindi"> Hindi
 		</label>
   	</div>
 	
 	<div>
-		<input type="hidden" name="list" value="<?php _e($args['list_id']);?>"/>
+		<input type="hidden" name="list" value="<?php _e($args['id']);?>"/>
 		<input type="hidden" name="boolean" value="true"/> <!-- Returns Plain Text Response-->
 	</div>
 	<div>
-		<button type="submit" class="btn btn-primary sendy-sub-btn" >Subscribe</button>
+		<button type="submit" class="btn btn-primary sendy-sub-btn">Subscribe</button>
 	</div>
-	<div class="sendy-status"></div>
+	<div class="sendy-status space-one"></div>
 </form>

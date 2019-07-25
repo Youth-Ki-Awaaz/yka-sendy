@@ -5,7 +5,7 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 	function __construct() {
 		add_action('wp_enqueue_scripts', array( $this, 'assets' ));
 
-		add_shortcode( 'yka_sendy_pm_brief', array($this, 'pm_brief_sh_cb') );
+		add_shortcode( 'yka_sendy_form', array($this, 'subscription_form') );
 
 	}
 
@@ -15,23 +15,26 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 
 		wp_enqueue_script(
 			'yka-sendy-js',
-			plugins_url( $plugin_assets_folder.'js/sendy-subs.js' ),
+			plugins_url( $plugin_assets_folder.'js/yka-sendy.js' ),
 			array( 'jquery'),
-			KEPLER_POLL_VERSION,
+			YKA_SENDY_VERSION,
 			true
 		);
 	}
 
-	function pm_brief_sh_cb( $atts ) {
+	function subscription_form( $atts ) {
 
 		$args = shortcode_atts( array(
-			'list_id' => 'WrbSjPq8qtb2GEWyOTFrIw', /*default to test list*/
+			'id' => 'WrbSjPq8qtb2GEWyOTFrIw', /*defaults to test list*/
 		), $atts );
 
+
 		ob_start();
-			include 'forms/pm-brief.php';
+			include 'forms/subscription.php';
 		return ob_get_clean();
+
 	}
+
 
 	function get_states() {
 		
@@ -78,5 +81,5 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 
 }
 
-$sendy = new YKA_SENDY_SUBSCRIPTION();
+new YKA_SENDY_SUBSCRIPTION;
 
