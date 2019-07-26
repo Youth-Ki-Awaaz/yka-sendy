@@ -28,7 +28,8 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 	function subscription_form( $atts ) {
 
 		$args = shortcode_atts( array(
-			'id' => 'WrbSjPq8qtb2GEWyOTFrIw', /*defaults to test list*/
+			'id' => 'WrbSjPq8qtb2GEWyOTFrIw', /* defaults to test list */
+			'cf' => false, /* set true to enable custom fields in form */	
 		), $atts );
 
 		$ajax_url = admin_url( 'admin-ajax.php' ) . '?action=yka_sendy_subs'; 
@@ -48,20 +49,29 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 		//POST variables
 		$name = $_POST['name'];
 		$email = $_POST['email'];
-		$state = $_POST['state']; 
-		$preferredlanguage = $_POST['lang'];
-		
-		
-		$postdata = http_build_query(
-		    array(
+		$cf = $_POST['cf'];
+
+		$data_args = array(
 		    'name' => $name,
 		    'email' => $email,
 		    'list' => $list,
-		    'State' => $state,
-		    'Preferredlanguage' => $preferredlanguage,
 		    'boolean' => 'true'
-		    )
 		);
+
+		if( $cf === "true" ) {
+
+			//grab values of custom fields
+			$state = $_POST['state']; 
+			$preferredlanguage = $_POST['lang'];
+
+			//update postdata args
+			$data_args['State'] = $state;
+			$data_args['Preferredlanguage'] = $preferredlanguage;
+		
+		}
+
+		
+		$postdata = http_build_query( $data_args );
 
 		$opts = array('http' => array('method'  => 'POST', 'header'  => 'Content-type: application/x-www-form-urlencoded', 'content' => $postdata));
 

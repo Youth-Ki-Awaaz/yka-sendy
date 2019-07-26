@@ -18,26 +18,36 @@
 
 				var name = $form.find('input[name="name"]').val(),
 				email = $form.find('input[name="email"]').val(),
-				state = $form.find('select[name="state"]').children("option:selected").val(),
 				url = $form.data('url'),
+				cf = $form.find('input[name="cf"]').val(),
 				listId = $form.find('input[name="list"]').val();
 
 				
-				//get comma seperated language choice
-				var lang = $form.find('input[name="language[]"]:checked').map(function (i, el){
-					return $(el).val();
-				}).get().join(', ');
-				
-
 				var data = { 
 					name:name, 
 					email:email, 
-					state:state, 
-					lang:lang,
-					list:listId
+					list:listId,
+					cf: cf
 				};
 
 
+				//if form has custom fields grab its value
+				if( cf === "true" ) {
+
+					var state = $form.find('select[name="state"]').children("option:selected").val();
+					
+					//get prefered language as comma seperated values
+					var lang = $form.find('input[name="language[]"]:checked').map(function (i, el){
+									return $(el).val();
+								}).get().join(', ');	
+				
+					//update data object
+					data.state = state;
+					data.lang = lang
+
+				}
+				
+				
 				$.post(
 					url, 
 					data, 

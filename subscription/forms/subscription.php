@@ -8,6 +8,8 @@
     	<input type="email" name="email" class="form-control" placeholder="Email" required>
   	</div>
 
+  <?php if( $args['cf'] ): ?>
+
   	<select name="state" class="form-control">
 	  <option value="">State/UT</option>
 	  <?php
@@ -30,9 +32,12 @@
 			</label>
 		</div>
   	</div>
+
+  <?php endif;?>
 	
 	<div>
 		<input type="hidden" name="list" value="<?php _e($args['id']);?>"/>
+		<input type="hidden" name="cf" value="<?php $args['cf']? _e('true'): _e('false');?>" />
 	</div>
 	<div>
 		<button type="submit" class="btn btn-primary sendy-sub-btn">Subscribe <i class="fa fa-refresh fa-spin" style="display:none"></i></button>
