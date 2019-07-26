@@ -7,6 +7,7 @@
 			var $form 	= $( this ),
 			$submit	= $form.find('[type=submit]'),
 			$status = $form.find('.sendy-status');
+			$loader = $form.find('.sendy-sub-btn .fa');
 
 
 			function subscribe() {
@@ -32,6 +33,8 @@
 					url, 
 					data, 
 					function(response) {
+
+						disableLoader();
 
 				      	if(response) {
 				      		var msg = "";
@@ -64,11 +67,23 @@
 			$form.submit( function( ev ){
 			
 				ev.preventDefault();
+				
+				enableLoader();
+
 				subscribe();				
 			
 			});
 
-		});
+
+			function enableLoader() {
+				$loader.css('display', 'inline-block');
+			}
+
+			function disableLoader() {
+				$loader.css('display', 'none');
+			}
+
+		}); 
 
 	};
 	
@@ -77,7 +92,7 @@
 
 
 jQuery(document).ready(function(){
-	
+		
 	jQuery( 'form[data-behaviour~=yka-sendy-form]' ).yka_sendy_form();	
 	
 });

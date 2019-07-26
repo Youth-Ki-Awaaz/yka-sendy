@@ -34,7 +34,7 @@
 		<input type="hidden" name="list" value="<?php _e($args['id']);?>"/>
 	</div>
 	<div>
-		<button type="submit" class="btn btn-primary sendy-sub-btn">Subscribe</button>
+		<button type="submit" class="btn btn-primary sendy-sub-btn">Subscribe <i class="fa fa-refresh fa-spin" style="display:none"></i></button>
 	</div>
 	<div class="sendy-status space-one"></div>
 </form>
