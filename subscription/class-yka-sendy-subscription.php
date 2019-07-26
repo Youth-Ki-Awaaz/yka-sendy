@@ -32,7 +32,10 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 			'cf' => false, /* set true to enable custom fields in form */	
 		), $atts );
 
-		$ajax_url = admin_url( 'admin-ajax.php' ) . '?action=yka_sendy_subs'; 
+		
+		$ajax_url 	= admin_url( 'admin-ajax.php' ) . '?action=yka_sendy_subs'; 
+		$nonce 		= wp_create_nonce('YKA-SENDY-FORM');
+
 
 		ob_start();
 			include 'forms/subscription.php';
@@ -43,30 +46,32 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 
 	function sendy_ajax_handler() {
 
-		$sendy_url = 'https://newsletters.youthkiawaaz.com';
-		$list = $_POST['list'];
+		check_ajax_referer( 'YKA-SENDY-FORM', 'token' );
+
+		$sendy_url 	= 'https://newsletters.youthkiawaaz.com';
+		$list 		= sanitize_text_field( $_POST['list'] );
 		
 		//POST variables
-		$name = $_POST['name'];
-		$email = $_POST['email'];
-		$cf = $_POST['cf'];
+		$name 		= sanitize_text_field( $_POST['name'] );
+		$email 		= sanitize_email( $_POST['email'] );
+		$cf 		= sanitize_text_field( $_POST['cf'] );
 
-		$data_args = array(
-		    'name' => $name,
+		$data_args 	= array(
+		    'name' 	=> $name,
 		    'email' => $email,
-		    'list' => $list,
+		    'list' 	=> $list,
 		    'boolean' => 'true'
 		);
 
 		if( $cf === "true" ) {
 
 			//grab values of custom fields
-			$state = $_POST['state']; 
-			$preferredlanguage = $_POST['lang'];
+			$state = sanitize_text_field( $_POST['state'] ); 
+			$lang  = sanitize_text_field( $_POST['lang'] );
 
 			//update postdata args
 			$data_args['State'] = $state;
-			$data_args['Preferredlanguage'] = $preferredlanguage;
+			$data_args['Preferredlanguage'] = $lang;
 		
 		}
 

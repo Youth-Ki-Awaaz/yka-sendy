@@ -20,6 +20,7 @@
 				email = $form.find('input[name="email"]').val(),
 				url = $form.data('url'),
 				cf = $form.find('input[name="cf"]').val(),
+				token = $form.data('token'),
 				listId = $form.find('input[name="list"]').val();
 
 				
@@ -27,7 +28,8 @@
 					name:name, 
 					email:email, 
 					list:listId,
-					cf: cf
+					cf: cf,
+					token: token
 				};
 
 
@@ -47,7 +49,7 @@
 
 				}
 				
-				
+
 				$.post(
 					url, 
 					data, 

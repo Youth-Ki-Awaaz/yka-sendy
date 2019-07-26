@@ -1,5 +1,5 @@
 
-<form method="POST"  data-behaviour="yka-sendy-form" data-url="<?php _e($ajax_url);?>" content="text/html; charset=utf-8" >
+<form method="POST"  data-behaviour="yka-sendy-form" data-url="<?php _e($ajax_url);?>" content="text/html; charset=utf-8" data-token="<?php _e($nonce);?>" >
 
 	<div class="form-group">
     	<input type="name" name="name" class="form-control" placeholder="Name" required>
