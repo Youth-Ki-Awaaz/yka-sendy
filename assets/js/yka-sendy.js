@@ -10,14 +10,23 @@
 			$loader = $form.find('.sendy-sub-btn .fa');
 
 
+			//disable first option from getting select
+			$form.find('select option:first').attr("disabled", "disabled");
+
+
 			function subscribe() {
 
 				var name = $form.find('input[name="name"]').val(),
 				email = $form.find('input[name="email"]').val(),
-				state = $form.find('select[name="State"]').children("option:selected").val(),
-				lang = $form.find('input[name="Preferredlanguage"]:checked').val(),
+				state = $form.find('select[name="state"]').children("option:selected").val(),
 				url = $form.data('url'),
 				listId = $form.find('input[name="list"]').val();
+
+				
+				//get comma seperated language choice
+				var lang = $form.find('input[name="language[]"]:checked').map(function (i, el){
+					return $(el).val();
+				}).get().join(', ');
 				
 
 				var data = { 
@@ -51,7 +60,7 @@
 						      	msg = "You're already subscribed!";
 						    }
 					      	else {
-						      	msg = "You're subscribed!";
+						      	msg = "You're subscribed to our mailing list. Thank You!";
 					      	}
 					      	
 					      	$status.html(msg);

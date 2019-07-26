@@ -1,5 +1,5 @@
 
-<form method="POST" data-behaviour="yka-sendy-form" data-url="<?php _e($ajax_url);?>" content="text/html; charset=utf-8" >
+<form method="POST"  data-behaviour="yka-sendy-form" data-url="<?php _e($ajax_url);?>" content="text/html; charset=utf-8" >
 
 	<div class="form-group">
     	<input type="name" name="name" class="form-control" placeholder="Name" required>
@@ -8,8 +8,8 @@
     	<input type="email" name="email" class="form-control" placeholder="Email" required>
   	</div>
 
-  	<select name="State" class="form-control">
-	  <option >State/UT</option>
+  	<select name="state" class="form-control">
+	  <option value="">State/UT</option>
 	  <?php
 	  	$states = $this->get_states();
 	  	foreach ($states as $state) {
@@ -20,14 +20,15 @@
 
   	<div class="form-group space-one">
   		<label>Preferred Language </label>
-
-		<label class="radio-inline">
-			<input type="radio" name="Preferredlanguage" value="english"> English
-		</label>
-		
-		<label class="radio-inline">
-			<input type="radio" name="Preferredlanguage" value="hindi"> Hindi
-		</label>
+		<div>
+			<label class="checkbox-inline">
+				<input type="checkbox" name="language[]" value="english"> English
+			</label>
+			
+			<label class="checkbox-inline">
+				<input type="checkbox" name="language[]" value="hindi"> Hindi
+			</label>
+		</div>
   	</div>
 	
 	<div>
