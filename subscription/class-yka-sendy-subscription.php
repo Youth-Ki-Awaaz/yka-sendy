@@ -10,7 +10,7 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 		add_action( 'wp_ajax_yka_sendy_subs', array( $this, 'sendy_ajax_handler' ) );
 		add_action( 'wp_ajax_nopriv_yka_sendy_subs', array( $this, 'sendy_ajax_handler' ) );
 
-		add_action( 'user_register', array( $this, 'signup_user_sync' ), 20, 1 ); 
+		add_action( 'user_register', array( $this, 'signup_user_sync' ), 99, 1 ); 
 
 	}
 
@@ -107,7 +107,7 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 	function signup_user_sync( $user_id ) {
 		
 		$options = get_option( 'yka_sendy_settings' );
-		
+
 		if(isset( $options['yka_sendy_signup_sync']) && $options['yka_sendy_signup_sync'] && !empty($options['yka_sendy_signup_list']) ) {
 			
 			$list = $options['yka_sendy_signup_list'];
@@ -117,7 +117,7 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
       		$args = array(
       			"name" 		=> $user_info->user_nicename,
       			"email"		=> $user_info->user_email,
-      			'list' 		=> $list,
+      			'list' 		=> trim( $list ),
 		        'boolean' 	=> 'true'
       		);
       		
