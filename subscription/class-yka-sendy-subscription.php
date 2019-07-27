@@ -10,6 +10,8 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 		add_action( 'wp_ajax_yka_sendy_subs', array( $this, 'sendy_ajax_handler' ) );
 		add_action( 'wp_ajax_nopriv_yka_sendy_subs', array( $this, 'sendy_ajax_handler' ) );
 
+		add_action( 'user_register', array( $this, 'signup_user_sync' ), 20, 1 ); 
+
 	}
 
 	function assets() {
@@ -48,7 +50,6 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 
 		check_ajax_referer( 'YKA-SENDY-FORM', 'token' );
 
-		$sendy_url 	= 'https://newsletters.youthkiawaaz.com';
 		$list 		= sanitize_text_field( $_POST['list'] );
 		
 		//POST variables
@@ -56,7 +57,7 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 		$email 		= sanitize_email( $_POST['email'] );
 		$cf 		= sanitize_text_field( $_POST['cf'] );
 
-		$data_args 	= array(
+		$data = array(
 		    'name' 	=> $name,
 		    'email' => $email,
 		    'list' 	=> $list,
@@ -69,25 +70,57 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 			$state = sanitize_text_field( $_POST['state'] ); 
 			$lang  = sanitize_text_field( $_POST['lang'] );
 
-			//update postdata args
-			$data_args['State'] = $state;
-			$data_args['Preferredlanguage'] = $lang;
+			//update $data variable
+			$data['State'] = $state;
+			$data['Preferredlanguage'] = $lang;
 		
 		}
 
 		
-		$postdata = http_build_query( $data_args );
+		$result = $this->sync_with_sendy( $data );
+		
+		echo $result;
+
+		wp_die();
+	}
+
+	
+
+	function sync_with_sendy( $data ) {
+
+		$api_endpoint 	= 'https://newsletters.youthkiawaaz.com/subscribe';
+		
+		$postdata = http_build_query( $data );
 
 		$opts = array('http' => array('method'  => 'POST', 'header'  => 'Content-type: application/x-www-form-urlencoded', 'content' => $postdata));
 
 		
 		$context  = stream_context_create($opts);
 		
-		$result = file_get_contents($sendy_url.'/subscribe', false, $context);
-		
-		echo $result;
+		$result = file_get_contents($api_endpoint, false, $context);
 
-		wp_die();
+		return $result;
+
+	}
+
+
+	function signup_user_sync( $user_id ) {
+		if(isset( $options['yka_sendy_signup_sync']) && $options['yka_sendy_signup_sync'] && !empty($options['yka_sendy_signup_list']) ) {
+			
+			$list = $options['yka_sendy_signup_list'];
+
+			$user_info = get_userdata($user_id);
+			
+      		$args = array(
+      			"name" 		=> $user_info->user_nicename,
+      			"email"		=> $user_info->user_email,
+      			'list' 		=> $list,
+		        'boolean' 	=> 'true'
+      		);
+      		
+      		$result = $this->sync_with_sendy($args);
+
+      	}
 	}
 
 
