@@ -105,6 +105,9 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 
 
 	function signup_user_sync( $user_id ) {
+		
+		$options = get_option( 'yka_sendy_settings' );
+		
 		if(isset( $options['yka_sendy_signup_sync']) && $options['yka_sendy_signup_sync'] && !empty($options['yka_sendy_signup_list']) ) {
 			
 			$list = $options['yka_sendy_signup_list'];
