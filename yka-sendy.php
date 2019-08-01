@@ -3,7 +3,7 @@
 /*
 * Plugin Name: YKA Sendy
 * Plugin URI: https://sputznik.com
-* Description : Plugin to manage subscription on Sendy Server
+* Description: Plugin to manage subscription on Sendy Server
 * Version: 1.0.0
 * Author: Jay Vardhan
 * Author URI: https://sputznik.com
