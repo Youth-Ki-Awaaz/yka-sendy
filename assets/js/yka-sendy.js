@@ -11,15 +11,20 @@
 
 
 			//disable first option from getting select
-			$form.find('select option:first').attr("disabled", "disabled");
+			var selectItem = $form.find('select option:first');
 
+			if( selectItem.length ) {
+				selectItem.attr("disabled", "disabled");
+			}
+			
 
 			function subscribe() {
+
+				var fields = $form.find('input[name="fields"]').val();
 
 				var name = $form.find('input[name="name"]').val(),
 				email = $form.find('input[name="email"]').val(),
 				url = $form.data('url'),
-				cf = $form.find('input[name="cf"]').val(),
 				token = $form.data('token'),
 				listId = $form.find('input[name="list"]').val();
 
@@ -28,27 +33,30 @@
 					name:name, 
 					email:email, 
 					list:listId,
-					cf: cf,
+					fields: fields,
 					token: token
 				};
 
 
-				//if form has custom fields grab its value
-				if( cf === "true" ) {
+				var cf = fields.split(',');
+
+				
+				if ( $.inArray('state', cf) != -1)  {
 
 					var state = $form.find('select[name="state"]').children("option:selected").val();
 					
+					data.state = state;
+				}
+
+				if ($.inArray('language', cf) != -1) {
 					//get prefered language as comma seperated values
 					var lang = $form.find('input[name="language[]"]:checked').map(function (i, el){
 									return $(el).val();
 								}).get().join(', ');	
 				
-					//update data object
-					data.state = state;
 					data.lang = lang
-
 				}
-				
+
 
 				$.post(
 					url, 

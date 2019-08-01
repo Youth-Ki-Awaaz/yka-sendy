@@ -20,6 +20,7 @@ define( 'YKA_SENDY_VERSION', '1.0.0' );
 $inc_files = array(
 	'admin-settings.php',
 	'class-yka-sendy-base.php',
+	'subscription/class-element-builder.php',
 	'subscription/class-yka-sendy-subscription.php',
 );
 

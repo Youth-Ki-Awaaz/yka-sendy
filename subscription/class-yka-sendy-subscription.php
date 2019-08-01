@@ -31,12 +31,14 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 
 		$args = shortcode_atts( array(
 			'id' => 'WrbSjPq8qtb2GEWyOTFrIw', /* defaults to test list */
-			'cf' => false, /* set true to enable custom fields in form */	
+			'fields' => "name, email",
 		), $atts );
 
 		
 		$ajax_url 	= admin_url( 'admin-ajax.php' ) . '?action=yka_sendy_subs'; 
 		$nonce 		= wp_create_nonce('YKA-SENDY-FORM');
+
+		$fields = explode(',', $args['fields'] );
 
 
 		ob_start();
@@ -55,7 +57,7 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 		//POST variables
 		$name 		= sanitize_text_field( $_POST['name'] );
 		$email 		= sanitize_email( $_POST['email'] );
-		$cf 		= sanitize_text_field( $_POST['cf'] );
+		$fields 	= sanitize_text_field( $_POST['fields'] );
 
 		$data = array(
 		    'name' 	=> $name,
@@ -64,18 +66,22 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 		    'boolean' => 'true'
 		);
 
-		if( $cf === "true" ) {
+		if( strlen($fields) ) {
 
-			//grab values of custom fields
-			$state = sanitize_text_field( $_POST['state'] ); 
-			$lang  = sanitize_text_field( $_POST['lang'] );
+			$fields = explode(',', $fields);
 
-			//update $data variable
-			$data['State'] = $state;
-			$data['Preferredlanguage'] = $lang;
+			if( in_array('state', $fields, true) ) {
+				$state = sanitize_text_field( $_POST['state'] ); 	
+				$data['State'] = $state;
+			
+			}
+
+			if( in_array('language', $fields, true) ) {
+				$lang  = sanitize_text_field( $_POST['lang'] );
+				$data['Preferredlanguage'] = $lang;
+			}
 		
 		}
-
 		
 		$result = $this->sync_with_sendy( $data );
 		
@@ -124,50 +130,6 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
       		$result = $this->sync_with_sendy($args);
 
       	}
-	}
-
-
-	function get_states() {
-		
-		return array(
-			"Andaman and Nicobar Islands",
-			"Andhra Pradesh",
-			"Arunachal Pradesh",
-			"Assam",
-			"Bihar",
-			"Chandigarh",
-			"Chhattisgarh",
-			"Dadar and Nagar Haveli",
-			"Daman and Diu",
-			"Delhi",
-			"Goa",
-			"Gujarat",
-			"Haryana",
-			"Himachal Pradesh",
-			"Jammu and Kashmir",
-			"Jharkhand",
-			"Karnataka",
-			"Kerala",
-			"Lakshadweep",
-			"Madhya Pradesh",
-			"Maharashtra",
-			"Manipur",
-			"Meghalaya",
-			"Mizoram",
-			"Nagaland",
-			"Orissa",
-			"Punjab",
-			"Puducherry",
-			"Rajasthan",
-			"Sikkim",
-			"Tamil Nadu",
-			"Telangana",
-			"Tripura",
-			"Uttaranchal",
-			"Uttar Pradesh",
-			"West Bengal",
-		);
-
 	}
 
 }
