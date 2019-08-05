@@ -34,7 +34,19 @@ class ELEMENT_BUILDER extends YKA_SENDY_BASE {
 				return $this->get_state(); 
 
 			case 'language':
-				return $this->get_language(); 
+				return $this->get_language();
+
+			case 'gender':
+				return $this->get_gender();
+
+			case 'editor':
+				return $this->get_editor();
+
+			case 'beats':
+				return $this->get_beats();
+
+			case 'city':
+				return $this->get_city();	 
 			
 			default:
 				return "Field didn't Match!!";
@@ -45,7 +57,7 @@ class ELEMENT_BUILDER extends YKA_SENDY_BASE {
 
 	public function get_name() { ?>
 		<div class="form-group">
-    		<input type="name" name="name" class="form-control" placeholder="Name" required>
+    		<input type="text" name="name" class="form-control" placeholder="Name" required>
   		</div> <?php		
 	}
 
@@ -56,7 +68,7 @@ class ELEMENT_BUILDER extends YKA_SENDY_BASE {
 	}
 
 	public function get_state() { ?>
-		<select name="state" class="form-control">
+		<select name="state" class="form-control space-top" data-location="<?php _e(admin_url( 'admin-ajax.php' ) . '?action=yka_sendy_user_location');?>">
 		  <option value="">State/UT</option>
 		  <?php
 		  	$states = $this->get_states_option();
@@ -68,9 +80,17 @@ class ELEMENT_BUILDER extends YKA_SENDY_BASE {
 		
 	}
 
+	public function get_city() { ?>
+		<div data-behaviour="sendy-city">
+			<select name="city" class="form-control space-top" >
+			  	<option value="">City</option>
+			</select>
+		</div> <?php
+	}
+
 	
 	public function get_language() { ?>
-		<div class="form-group space-one">
+		<div class="form-group space-top">
 	  		<label>Preferred Language </label>
 			<div>
 				<label class="checkbox-inline">
@@ -84,20 +104,75 @@ class ELEMENT_BUILDER extends YKA_SENDY_BASE {
 	  	</div> <?php	
 	}
 
+	
+	public function get_gender() { ?>
+		<select name="gender" class="form-control">
+		  <option>Gender</option>
+		  <option>Male</option>
+		  <option>Female</option>
+		  <option>Transgeder</option>
+		  <option>Prefer Not to Say</option>	
+		</select> <?php
+
+	}
+
+
+	public function get_editor() { ?>
+		<div class="form-group space-top">
+    		<input type="text" name="editor" class="form-control" placeholder="Editor" />
+  		</div> <?php
+	}
+
+
+	public function get_beats() { ?>
+		<div class="form-group space-top">
+	  		<label>Beats</label>
+			<div>
+				<label class="checkbox-inline">
+					<input type="checkbox" name="beats[]" value="society"> Society
+				</label>
+				
+				<label class="checkbox-inline">
+					<input type="checkbox" name="beats[]" value="gender and sexuality"> Gender and Sexuality
+				</label>
+
+				<label class="checkbox-inline">
+					<input type="checkbox" name="beats[]" value="rights"> Rights
+				</label>
+
+				<label class="checkbox-inline">
+					<input type="checkbox" name="beats[]" value="culture vulture"> Culture-Vulture
+				</label>
+
+				<label class="checkbox-inline">
+					<input type="checkbox" name="beats[]" value="my story"> My Story
+				</label>
+
+				<label class="checkbox-inline">
+					<input type="checkbox" name="beats[]" value="citizen news"> Citizen News
+				</label>
+
+				<label class="checkbox-inline">
+					<input type="checkbox" name="beats[]" value="campus waatch"> Campus Watch
+				</label>
+
+			</div>
+	  	</div> <?php
+	}
+
 
 	public function get_states_option() {
 		
 		return array(
-			"Andaman and Nicobar Islands",
 			"Andhra Pradesh",
 			"Arunachal Pradesh",
 			"Assam",
 			"Bihar",
-			"Chandigarh",
+			"Chandigarh (UT)",
 			"Chhattisgarh",
-			"Dadar and Nagar Haveli",
-			"Daman and Diu",
-			"Delhi",
+			"Dadra and Nagar Haveli (UT)",
+			"Daman and Diu (UT)",
+			"Delhi (NCT)",
 			"Goa",
 			"Gujarat",
 			"Haryana",
@@ -106,25 +181,26 @@ class ELEMENT_BUILDER extends YKA_SENDY_BASE {
 			"Jharkhand",
 			"Karnataka",
 			"Kerala",
-			"Lakshadweep",
+			"Lakshadweep (UT)",
 			"Madhya Pradesh",
 			"Maharashtra",
 			"Manipur",
 			"Meghalaya",
 			"Mizoram",
 			"Nagaland",
-			"Orissa",
+			"Odisha",
+			"Puducherry (UT)",
 			"Punjab",
-			"Puducherry",
 			"Rajasthan",
 			"Sikkim",
 			"Tamil Nadu",
 			"Telangana",
 			"Tripura",
-			"Uttaranchal",
+			"Uttarakhand",
 			"Uttar Pradesh",
 			"West Bengal",
 		);
+
 
 	}
 

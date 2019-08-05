@@ -115,6 +115,40 @@
 		}); 
 
 	};
+
+	$.fn.yka_sendy_city = function( options ){
+
+		return this.each(function(){
+			var $state = $('form[data-behaviour~=yka-sendy-form] select[name="state"]');
+			var $city = $('form[data-behaviour~=yka-sendy-form] select[name="city"]');
+
+			$state.on('change', function() {
+			    var selectedState = $(this).find(":selected").val();
+
+			    var url = $state.data('location') + "&place=" + selectedState;
+
+			    $.ajax({
+					type:'get',
+					url	: url,
+				}).done(function(response){
+					if( response.length ) {
+						var districts =  JSON.parse(response);
+
+						var cities = [];
+						$.each(districts, function(index, value) {
+							cities.push('<option value="' + value + '">' + value + "</option>");
+						} );
+
+						$city.html(cities.join(""));
+					}
+					
+
+				});
+
+			});
+
+		});
+	};	
 	
 
 }(jQuery));
@@ -123,5 +157,9 @@
 jQuery(document).ready(function(){
 		
 	jQuery( 'form[data-behaviour~=yka-sendy-form]' ).yka_sendy_form();	
-	
+	jQuery( '[data-behaviour~=sendy-city]' ).yka_sendy_city();
 });
+
+/*$('body').on('sjax:init', function(event, el) { 
+
+} );*/

@@ -10,6 +10,10 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 		add_action( 'wp_ajax_yka_sendy_subs', array( $this, 'sendy_ajax_handler' ) );
 		add_action( 'wp_ajax_nopriv_yka_sendy_subs', array( $this, 'sendy_ajax_handler' ) );
 
+		
+		add_action( 'wp_ajax_yka_sendy_user_location', array( $this, 'sendy_location_handler' ) );
+		add_action( 'wp_ajax_nopriv_yka_sendy_user_location', array( $this, 'sendy_location_handler' ) );			
+
 		add_action( 'user_register', array( $this, 'signup_user_sync' ), 99, 1 ); 
 
 	}
@@ -73,12 +77,31 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 			if( in_array('state', $fields, true) ) {
 				$state = sanitize_text_field( $_POST['state'] ); 	
 				$data['State'] = $state;
-			
 			}
 
 			if( in_array('language', $fields, true) ) {
 				$lang  = sanitize_text_field( $_POST['lang'] );
 				$data['Preferredlanguage'] = $lang;
+			}
+
+			if( in_array('gender', $fields, true) ) {
+				$gender = sanitize_text_field( $_POST['gender'] );
+				$data['gender'] = $gender;
+			}
+
+			if( in_array('editor', $fields, true) ) {
+				$editor = sanitize_text_field( $_POST['editor'] );
+				$data['editor'] = $editor;
+			}
+
+			if( in_array('beats', $fields, true) ) {
+				$beats = sanitize_text_field( $_POST['beats'] );
+				$data['beats'] = $beats;
+			}
+
+			if( in_array('city', $fields, true) ) {
+				$city = sanitize_text_field( $_POST['city'] );
+				$data['city'] = $city;
 			}
 		
 		}
@@ -130,6 +153,26 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
       		$result = $this->sync_with_sendy($args);
 
       	}
+	}
+
+
+	function sendy_location_handler() {
+		$place = $_GET['place'];
+		
+		$data = file_get_contents( plugin_dir_path( __DIR__ ) . "assets/json/location.json" );
+
+		$json = json_decode($data, true);
+		
+		
+		foreach ($json['states'] as $key => $location) {
+			if( $location['state'] == $place ){
+				$result = $location['districts'];
+				echo json_encode( $result );
+			}
+			
+		}
+		wp_die();
+		
 	}
 
 }
