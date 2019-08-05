@@ -124,39 +124,31 @@ class ELEMENT_BUILDER extends YKA_SENDY_BASE {
 	}
 
 
-	public function get_beats() { ?>
+	public function get_beats() { 
+		
+		$options = array(
+			'Society',
+			'Gender and Sexulaity',
+			'Rights',
+			'Cuture Vulture',
+			'My Story',
+			'Citizen News',
+			'Campus Watch'
+		);
+
+		?>
 		<div class="form-group space-top">
 	  		<label>Beats</label>
-			<div>
+			<div> 
+			
+			<?php foreach ($options as $option) : ?>
 				<label class="checkbox-inline">
-					<input type="checkbox" name="beats[]" value="society"> Society
-				</label>
-				
-				<label class="checkbox-inline">
-					<input type="checkbox" name="beats[]" value="gender and sexuality"> Gender and Sexuality
-				</label>
-
-				<label class="checkbox-inline">
-					<input type="checkbox" name="beats[]" value="rights"> Rights
-				</label>
-
-				<label class="checkbox-inline">
-					<input type="checkbox" name="beats[]" value="culture vulture"> Culture-Vulture
-				</label>
-
-				<label class="checkbox-inline">
-					<input type="checkbox" name="beats[]" value="my story"> My Story
-				</label>
-
-				<label class="checkbox-inline">
-					<input type="checkbox" name="beats[]" value="citizen news"> Citizen News
-				</label>
-
-				<label class="checkbox-inline">
-					<input type="checkbox" name="beats[]" value="campus waatch"> Campus Watch
-				</label>
+					<input type="checkbox" name="beats[]" value="<?php _e($option);?>" > <?php _e($option);?>	
+				</label> 
+			<?php endforeach; ?>
 
 			</div>
+				
 	  	</div> <?php
 	}
 

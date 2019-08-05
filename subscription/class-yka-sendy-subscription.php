@@ -86,22 +86,22 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 
 			if( in_array('gender', $fields, true) ) {
 				$gender = sanitize_text_field( $_POST['gender'] );
-				$data['gender'] = $gender;
+				$data['Gender'] = $gender;
 			}
 
 			if( in_array('editor', $fields, true) ) {
 				$editor = sanitize_text_field( $_POST['editor'] );
-				$data['editor'] = $editor;
+				$data['Editor'] = $editor;
 			}
 
 			if( in_array('beats', $fields, true) ) {
 				$beats = sanitize_text_field( $_POST['beats'] );
-				$data['beats'] = $beats;
+				$data['Beats'] = $beats;
 			}
 
 			if( in_array('city', $fields, true) ) {
 				$city = sanitize_text_field( $_POST['city'] );
-				$data['city'] = $city;
+				$data['City'] = $city;
 			}
 		
 		}

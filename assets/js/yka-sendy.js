@@ -48,14 +48,44 @@
 					data.state = state;
 				}
 
+				if ( $.inArray('city', cf) != -1)  {
+
+					var city = $form.find('select[name="city"]').children("option:selected").val();
+					
+					data.city = city;
+				}
+
 				if ($.inArray('language', cf) != -1) {
 					//get prefered language as comma seperated values
 					var lang = $form.find('input[name="language[]"]:checked').map(function (i, el){
 									return $(el).val();
 								}).get().join(', ');	
 				
-					data.lang = lang
+					data.lang = lang;
 				}
+
+				if ($.inArray('beats', cf) != -1) {
+					//get beats as comma seperated values
+					var beats = $form.find('input[name="beats[]"]:checked').map(function (i, el){
+									return $(el).val();
+								}).get().join(', ');	
+				
+					data.beats = beats;
+				}
+
+				if($.inArray('editor', cf) != -1) {
+					var editor = $form.find('input[name="editor"]').val();
+					
+					data.editor = editor;	
+				}
+
+				if ( $.inArray('gender', cf) != -1)  {
+
+					var gender = $form.find('select[name="gender"]').children("option:selected").val();
+					
+					data.gender = gender;
+				}
+
 
 
 				$.post(
