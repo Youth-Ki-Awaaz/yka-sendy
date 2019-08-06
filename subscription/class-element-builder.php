@@ -110,7 +110,7 @@ class ELEMENT_BUILDER extends YKA_SENDY_BASE {
 		  <option>Gender</option>
 		  <option>Male</option>
 		  <option>Female</option>
-		  <option>Transgeder</option>
+		  <option>Transgender</option>
 		  <option>Prefer Not to Say</option>	
 		</select> <?php
 

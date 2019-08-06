@@ -14,7 +14,7 @@ if( !defined('ABSPATH') ) {
 }
 
 //constant to change js and css version
-define( 'YKA_SENDY_VERSION', '1.0.0' );
+define( 'YKA_SENDY_VERSION', '1.1.0' );
 
 
 $inc_files = array(
