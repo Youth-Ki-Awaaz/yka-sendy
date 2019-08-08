@@ -190,6 +190,3 @@ jQuery(document).ready(function(){
 	jQuery( '[data-behaviour~=sendy-city]' ).yka_sendy_city();
 });
 
-/*$('body').on('sjax:init', function(event, el) { 
-
-} );*/
