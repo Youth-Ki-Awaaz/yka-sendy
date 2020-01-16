@@ -157,20 +157,24 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 
 
 	function sendy_location_handler() {
-		$place = $_GET['place'];
-		
-		$data = file_get_contents( plugin_dir_path( __DIR__ ) . "assets/json/location.json" );
+		if( isset($_GET['place']) ) {
 
-		$json = json_decode($data, true);
-		
-		
-		foreach ($json['states'] as $key => $location) {
-			if( $location['state'] == $place ){
-				$result = $location['districts'];
-				echo json_encode( $result );
-			}
+			$place = $_GET['place'];
 			
+			$data = file_get_contents( plugin_dir_path( __DIR__ ) . "assets/json/location.json" );
+
+			$json = json_decode($data, true);
+			
+			
+			foreach ($json['states'] as $key => $location) {
+				if( $location['state'] == $place ){
+					$result = $location['districts'];
+					echo json_encode( $result );
+				}
+				
+			}
 		}
+		
 		wp_die();
 		
 	}
