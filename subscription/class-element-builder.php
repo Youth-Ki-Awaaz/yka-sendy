@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /*
  This class serves as proxy for sendy custom fields support in subscription form.
@@ -9,63 +9,106 @@ class ELEMENT_BUILDER extends YKA_SENDY_BASE {
 
 	// returned value is used to pass fields slug into js through form hidden field
 	public function get_fields_slug_string( $fields ) {
-		
+
 		$str = "";
 		foreach ($fields as $field ) {
 			$str .= trim($field);
-			$str .= ','; 
+			$str .= ',';
 		}
 
 		return rtrim($str, ',');
 	}
-	
-	
+
+
 	// return form elements in subscription form
 	public function get_form_element( $field ) {
-		
-		switch ( trim($field) ) {
+
+		switch ( trim( $field ) ) {
+
 			case 'name':
-				return $this->get_name();  
+				return $this->textfield( array(
+					//'type'				=> 'text',
+					'name' 				=> 'name',
+					'placeholder' => 'Name',
+					'required'		=> true
+				) );
 
 			case 'email':
-				return $this->get_email(); 
+				return $this->textfield( array(
+					'type'				=> 'email',
+					'name' 				=> 'email',
+					'placeholder' => 'Email',
+					'required'		=> true
+				) );
 
 			case 'state':
-				return $this->get_state(); 
+				return $this->get_state();
 
 			case 'language':
-				return $this->get_language();
+				return $this->checkboxes( array(
+					'class'		=> 'form-group space-top form-language',
+					'label'		=> 'Preferred Language',
+					'name' 		=> 'language',
+					'options'	=> array( 'english', 'hindi' )
+				) );
 
 			case 'gender':
-				return $this->get_gender();
+				return $this->dropdown( array(
+					'name'	=> 'gender',
+					'options'	=> array( 'Gender', 'Male', 'Female', 'Transgender', 'Prefer Not to Say' )
+				) );
 
 			case 'editor':
-				return $this->get_editor();
+				return $this->textfield( array(
+					'parent_class'	=> 'form-group space-top',
+					'name'					=> 'editor',
+					'placeholder'		=> 'Editor'
+				) );
 
 			case 'beats':
-				return $this->get_beats();
+				return $this->checkboxes( array(
+					'class'		=> 'form-group space-top',
+					'label'		=> 'Beats',
+					'name' 		=> 'beats',
+					'options'	=> array( 'Society', 'Gender and Sexuality', 'Rights', 'Cuture Vulture', 'My Story', 'Citizen News', 'Campus Watch' )
+				) );
 
 			case 'city':
-				return $this->get_city();	 
-			
+				return $this->get_city();
+
 			default:
-				return "Field didn't Match!!";
+				return "Field didn't Match!! Needs to be added.";
 				break;
-		}	
+		}
 	}
 
+	function textfield( $atts ){
 
-	public function get_name() { ?>
-		<div class="form-group">
-    		<input type="text" name="name" class="form-control" placeholder="Name" required>
-  		</div> <?php		
+		$atts['parent_class'] = isset( $atts['parent_class'] ) && $atts['parent_class'] ? $atts['parent_class'] : "form-group";
+
+		$atts['class'] = isset( $atts['class'] ) && $atts['class'] ? $atts['class'] : "form-control";
+
+		$atts['type'] = isset( $atts['type'] ) && $atts['type'] ? $atts['type'] : "text";
+
+		_e( '<div class="'.$atts['parent_class'].'">' );
+
+		_e( '<input' );
+		foreach( array( 'type', 'name', 'class', 'placeholder' ) as $slug ){
+			if( isset( $atts[ $slug ] ) && $atts[ $slug ] ){
+				_e( " $slug='".$atts[$slug]."'" );
+			}
+		}
+
+		if( isset( $atts['required'] ) && $atts['required'] ){
+			_e( ' required' );
+		}
+		_e( ' />' );
+
+
+
+		_e( '</div>' );
 	}
 
-	public function get_email() { ?>
-		<div class="form-group">
-	    	<input type="email" name="email" class="form-control" placeholder="Email" required>
-	  	</div> <?php
-	}
 
 	public function get_state() { ?>
 		<select name="state" class="form-control space-top" data-location="<?php _e(admin_url( 'admin-ajax.php' ) . '?action=yka_sendy_user_location');?>">
@@ -77,7 +120,7 @@ class ELEMENT_BUILDER extends YKA_SENDY_BASE {
 		  	}
 		  ?>
 		</select> <?php
-		
+
 	}
 
 	public function get_city() { ?>
@@ -88,73 +131,42 @@ class ELEMENT_BUILDER extends YKA_SENDY_BASE {
 		</div> <?php
 	}
 
-	
-	public function get_language() { ?>
-		<div class="form-group space-top">
-	  		<label>Preferred Language </label>
-			<div>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="language[]" value="english"> English
-				</label>
-				
-				<label class="checkbox-inline">
-					<input type="checkbox" name="language[]" value="hindi"> Hindi
-				</label>
-			</div>
-	  	</div> <?php	
-	}
 
-	
-	public function get_gender() { ?>
-		<select name="gender" class="form-control">
-		  <option>Gender</option>
-		  <option>Male</option>
-		  <option>Female</option>
-		  <option>Transgender</option>
-		  <option>Prefer Not to Say</option>	
-		</select> <?php
+	function dropdown( $atts ){
 
+		$atts['class'] = isset( $atts['class'] ) && $atts['class'] ? $atts['class'] : 'form-control';
+
+		_e('<select name="'.$atts['name'].'" class="' . $atts['class'] . '">');
+		foreach ( $atts['options'] as $option ) {
+			_e( '<option>' . $option . '</option>' );
+		}
+		_e('</select>');
 	}
 
 
-	public function get_editor() { ?>
-		<div class="form-group space-top">
-    		<input type="text" name="editor" class="form-control" placeholder="Editor" />
-  		</div> <?php
+	function checkboxes( $atts ){
+
+		$atts['class'] = isset( $atts['class'] ) && $atts['class'] ? $atts['class'] : "form-group space-top";
+
+		_e( '<div class="' . $atts['class'] . '">' );
+		if( isset( $atts['label'] ) && $atts['label'] ){ $this->label( $atts['label'] ); }
+		_e( '<div>' );
+		foreach ( $atts['options'] as $option ){
+			_e( '<label class="checkbox-inline">' );
+			_e( '<input type="checkbox" name="' . $atts['name'] . '[]" value="' . $option .'" >');
+			_e( $option );
+			_e( '</label>' );
+		}
+		_e( '</div>' );
+		_e( '</div>' );
 	}
 
 
-	public function get_beats() { 
-		
-		$options = array(
-			'Society',
-			'Gender and Sexulaity',
-			'Rights',
-			'Cuture Vulture',
-			'My Story',
-			'Citizen News',
-			'Campus Watch'
-		);
-
-		?>
-		<div class="form-group space-top">
-	  		<label>Beats</label>
-			<div> 
-			
-			<?php foreach ($options as $option) : ?>
-				<label class="checkbox-inline">
-					<input type="checkbox" name="beats[]" value="<?php _e($option);?>" > <?php _e($option);?>	
-				</label> 
-			<?php endforeach; ?>
-
-			</div>
-				
-	  	</div> <?php
-	}
+	function label(  $label ){ _e( '<label>' . $label . '</label>'); }
 
 
 	public function get_states_option() {
-		
+
 		return array(
 			"Andhra Pradesh",
 			"Arunachal Pradesh",
