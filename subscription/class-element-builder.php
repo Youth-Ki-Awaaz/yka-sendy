@@ -80,7 +80,7 @@ class ELEMENT_BUILDER extends YKA_SENDY_BASE {
 				return $this->textarea( array(
 					'name' 				=> 'topics',
 					'placeholder' => 'Topics I\'m interested in',
-					'rows'				=>	'10'
+					'rows'				=>	'3'
 				) );
 
 			default:
