@@ -76,11 +76,37 @@ class ELEMENT_BUILDER extends YKA_SENDY_BASE {
 			case 'city':
 				return $this->get_city();
 
+			case 'topics':
+				return $this->textarea( array(
+					'name' 				=> 'topics',
+					'placeholder' => 'Topics I\'m interested in',
+					'rows'				=>	'10'
+				) );
+
 			default:
 				return "Field didn't Match!! Needs to be added.";
 				break;
 		}
 	}
+
+		function textarea( $atts ){
+			$atts['parent_class'] = isset( $atts['parent_class'] ) && $atts['parent_class'] ? $atts['parent_class'] : "form-group";
+
+			$atts['class'] = isset( $atts['class'] ) && $atts['class'] ? $atts['class'] : "form-control";
+
+			_e( '<div class="'.$atts['parent_class'].'">' );
+
+			_e( "<textarea" );
+			foreach( array( 'rows','name', 'class', 'placeholder' ) as $slug ){
+				if( isset( $atts[ $slug ] ) && $atts[ $slug ] ){
+					_e( ' '.$slug.'="'.$atts[$slug].'"' );
+				}
+			}
+			_e( "></textarea>" );
+
+			_e( '</div>' );
+	}
+
 
 	function textfield( $atts ){
 
