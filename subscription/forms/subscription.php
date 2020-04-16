@@ -34,6 +34,8 @@
 	?>
 
 	<div>
+		<input type="hidden" name="token" value="<?php _e( $nonce );?>" />
+		<input type="checkbox" name="honey_on" value="1" class="hide" />
 		<input type="hidden" name="list" value="<?php _e($args['id']); ?>"/>
 		<input type="hidden" name="fields" value="<?php _e( implode(',', array_map( 'trim', explode( ',', $args['fields']) ) ) ); ?>" />
 	</div>

@@ -56,6 +56,12 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 
 		check_ajax_referer( 'YKA-SENDY-FORM', 'token' );
 
+		// CHECKING IF THE HONEPOT WAS ENABLED
+		if( isset( $_POST['honey_on'] ) && $_POST['honey_on'] == 1 ){
+			echo "Something has gone wrong";
+			wp_die();
+		}
+
 		$list 		= sanitize_text_field( $_POST['list'] );
 
 		//POST variables
@@ -80,21 +86,20 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 				'editor'		=> 'Editor',
 				'beats'			=> 'Beats',
 				'city'			=> 'City',
-				'topics'		=> 'Topics'
+				'topics'		=> 'Topics',
+				'language'	=> 'Preferredlanguage'
 			);
 
 			foreach( $fieldsData as $slug => $label ){
 				if( in_array( $slug, $fields, true) ) {
-					$data[ $label ] = sanitize_text_field( $_POST[ $slug ] );
+					$value = $_POST[ $slug ];
+
+					// IF DATA CONTAINS AN ARRAY BECAUSE THEY ARE CHECKBOX values
+					// THEN CONVERT THEM INTO COMMA SEPARATED VALUES
+					if( is_array( $value ) ){ $value = implode( ',', $value ); }
+					$data[ $label ] = sanitize_text_field( $value );
 				}
 			}
-
-			// HERE THE SLUG IS DIFFERENT FROM THE ONE PASSED IN THE POST PARAMETER
-			if( in_array('language', $fields, true) ) {
-				$lang  = sanitize_text_field( $_POST['lang'] );
-				$data['Preferredlanguage'] = $lang;
-			}
-
 		}
 
 		$result = $this->sync_with_sendy( $data );
