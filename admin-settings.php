@@ -36,6 +36,14 @@ function yka_sendy_settings_init() {
         'yka_sendy_section'
     );
 
+    add_settings_field(
+        'yka_sendy_api_key',
+        __( 'Sendy API Key', 'wordpress' ),
+        'yka_sendy_api_key_render',
+        'yka_sendy_group',
+        'yka_sendy_section'
+    );
+
 }
 
 
@@ -62,7 +70,16 @@ function yka_sendy_signup_list_render() {
 
 	$options = get_option( 'yka_sendy_settings' ); ?>
     
-    <input type='text' name='yka_sendy_settings[yka_sendy_signup_list]' value='<?php echo $options['yka_sendy_signup_list']; ?>'> <?php
+    <input type='text' name='yka_sendy_settings[yka_sendy_signup_list]' value='<?php isset( $options['yka_sendy_signup_list'] ) ? _e($options['yka_sendy_signup_list']) : ''; ?>'> <?php
+
+}
+
+
+function yka_sendy_api_key_render() {
+
+    $options = get_option( 'yka_sendy_settings' ); ?>
+    
+    <input type='text' name='yka_sendy_settings[yka_sendy_api_key]' value='<?php isset( $options['yka_sendy_api_key'] ) ? _e($options['yka_sendy_api_key']) : ''; ?>'> <?php
 
 }
 

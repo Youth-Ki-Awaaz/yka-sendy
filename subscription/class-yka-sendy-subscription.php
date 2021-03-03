@@ -115,7 +115,15 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE {
 
 		$api_endpoint 	= 'https://newsletters.youthkiawaaz.com/subscribe';
 
+		$options = get_option( 'yka_sendy_settings' );
+
+		if( isset($options['yka_sendy_api_key']) ) {
+			$data['api_key'] = $options['yka_sendy_api_key'];
+		}
+
+
 		$postdata = http_build_query( $data );
+
 
 		$opts = array('http' => array('method'  => 'POST', 'header'  => 'Content-type: application/x-www-form-urlencoded', 'content' => $postdata));
 
