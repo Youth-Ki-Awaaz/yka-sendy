@@ -4,17 +4,17 @@
 * Plugin Name: YKA Sendy
 * Plugin URI: https://sputznik.com
 * Description: Plugin to manage subscription on Sendy Server
-* Version: 1.1.0
+* Version: 2.0.0
 * Author: Jay Vardhan
 * Author URI: https://sputznik.com
 */
 
-if( !defined('ABSPATH') ) {
+if (!defined('ABSPATH')) {
 	exit;
 }
 
 //constant to change js and css version
-define( 'YKA_SENDY_VERSION', '1.1.2' );
+define('YKA_SENDY_VERSION', '2.0.0');
 
 
 $inc_files = array(
@@ -24,6 +24,6 @@ $inc_files = array(
 	'subscription/class-yka-sendy-subscription.php',
 );
 
-foreach( $inc_files as $file ){
-	require_once( $file );
+foreach ($inc_files as $file) {
+	require_once($file);
 }
