@@ -37,7 +37,7 @@
 		<input type="hidden" name="fields" value="<?php _e(implode(',', array_map('trim', explode(',', $args['fields'])))); ?>" />
 	</div>
 	<div>
-		<button type="submit" class="border rounded px-4 py-1">Subscribe <i class="fa fa-refresh fa-spin" style="display:none"></i></button>
+		<button type="submit" class="sendy-submit border rounded px-4 py-1">Subscribe <i class="fa fa-refresh fa-spin" style="display:none"></i></button>
 	</div>
 	<div id="sendy-status"></div>
 </form>

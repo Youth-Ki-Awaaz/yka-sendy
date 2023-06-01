@@ -151,99 +151,99 @@ class ELEMENT_BUILDER extends YKA_SENDY_BASE
 				_e("<option>$state</option>");
 			}
 			?>
-		</select> <?php
+		</select>
+	<?php
+	}
 
-				}
-
-				public function get_city()
-				{ ?>
+	public function get_city()
+	{ ?>
 		<div data-behaviour="sendy-city">
 			<select name="city" class="form-control space-top">
 				<option value="">City</option>
 			</select>
-		</div> <?php
-				}
+		</div>
+<?php
+	}
 
 
-				function dropdown($atts)
-				{
+	function dropdown($atts)
+	{
+		$atts['class'] = isset($atts['class']) && $atts['class'] ? $atts['class'] : 'form-control';
 
-					$atts['class'] = isset($atts['class']) && $atts['class'] ? $atts['class'] : 'form-control';
-
-					_e('<select name="' . $atts['name'] . '" class="' . $atts['class'] . '">');
-					foreach ($atts['options'] as $option) {
-						_e('<option>' . $option . '</option>');
-					}
-					_e('</select>');
-				}
-
-
-				function checkboxes($atts)
-				{
-
-					$atts['class'] = isset($atts['class']) && $atts['class'] ? $atts['class'] : "form-group space-top";
-
-					_e('<div class="' . $atts['class'] . '">');
-					if (isset($atts['label']) && $atts['label']) {
-						$this->label($atts['label']);
-					}
-					_e('<div>');
-					foreach ($atts['options'] as $option) {
-						_e('<label class="checkbox-inline">');
-						_e('<input type="checkbox" name="' . $atts['name'] . '[]" value="' . $option . '" >');
-						_e($option);
-						_e('</label>');
-					}
-					_e('</div>');
-					_e('</div>');
-				}
+		_e('<select name="' . $atts['name'] . '" class="' . $atts['class'] . '">');
+		foreach ($atts['options'] as $option) {
+			_e('<option>' . $option . '</option>');
+		}
+		_e('</select>');
+	}
 
 
-				function label($label)
-				{
-					_e('<label>' . $label . '</label>');
-				}
+	function checkboxes($atts)
+	{
+
+		$atts['class'] = isset($atts['class']) && $atts['class'] ? $atts['class'] : "form-group space-top";
+
+		_e('<div class="' . $atts['class'] . '">');
+		if (isset($atts['label']) && $atts['label']) {
+			$this->label($atts['label']);
+		}
+		_e('<div>');
+		foreach ($atts['options'] as $option) {
+			_e('<label class="checkbox-inline">');
+			_e('<input type="checkbox" name="' . $atts['name'] . '[]" value="' . $option . '" >');
+			_e($option);
+			_e('</label>');
+		}
+		_e('</div>');
+		_e('</div>');
+	}
 
 
-				public function get_states_option()
-				{
+	function label($label)
+	{
+		_e('<label>' . $label . '</label>');
+	}
 
-					return array(
-						"Andhra Pradesh",
-						"Arunachal Pradesh",
-						"Assam",
-						"Bihar",
-						"Chandigarh (UT)",
-						"Chhattisgarh",
-						"Dadra and Nagar Haveli (UT)",
-						"Daman and Diu (UT)",
-						"Delhi (NCT)",
-						"Goa",
-						"Gujarat",
-						"Haryana",
-						"Himachal Pradesh",
-						"Jammu and Kashmir",
-						"Jharkhand",
-						"Karnataka",
-						"Kerala",
-						"Lakshadweep (UT)",
-						"Madhya Pradesh",
-						"Maharashtra",
-						"Manipur",
-						"Meghalaya",
-						"Mizoram",
-						"Nagaland",
-						"Odisha",
-						"Puducherry (UT)",
-						"Punjab",
-						"Rajasthan",
-						"Sikkim",
-						"Tamil Nadu",
-						"Telangana",
-						"Tripura",
-						"Uttarakhand",
-						"Uttar Pradesh",
-						"West Bengal",
-					);
-				}
-			}
+
+	public function get_states_option()
+	{
+
+		return array(
+			"Andhra Pradesh",
+			"Arunachal Pradesh",
+			"Assam",
+			"Bihar",
+			"Chandigarh (UT)",
+			"Chhattisgarh",
+			"Dadra and Nagar Haveli (UT)",
+			"Daman and Diu (UT)",
+			"Delhi (NCT)",
+			"Goa",
+			"Gujarat",
+			"Haryana",
+			"Himachal Pradesh",
+			"Jammu and Kashmir",
+			"Jharkhand",
+			"Karnataka",
+			"Kerala",
+			"Lakshadweep (UT)",
+			"Madhya Pradesh",
+			"Maharashtra",
+			"Manipur",
+			"Meghalaya",
+			"Mizoram",
+			"Nagaland",
+			"Odisha",
+			"Puducherry (UT)",
+			"Punjab",
+			"Rajasthan",
+			"Sikkim",
+			"Tamil Nadu",
+			"Telangana",
+			"Tripura",
+			"Uttarakhand",
+			"Uttar Pradesh",
+			"West Bengal",
+		);
+	}
+}

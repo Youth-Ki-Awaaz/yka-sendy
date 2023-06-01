@@ -6,7 +6,7 @@ window.addEventListener("load", (event) => {
   if (formElement) {
     formElement.addEventListener("submit", async function (e) {
       e.preventDefault();
-
+      document.querySelector(".sendy-submit").disabled = true;
       const formData = new FormData(this);
       const data = new URLSearchParams(); // to convert multipart-form into x-www-url-encoded
 
@@ -26,6 +26,7 @@ window.addEventListener("load", (event) => {
       } else {
         status.innerHTML = message;
       }
+      document.querySelector(".sendy-submit").disabled = false;
     });
   }
 });
