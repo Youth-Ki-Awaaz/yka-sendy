@@ -117,10 +117,10 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE
 
 	function sync_with_sendy($data)
 	{
-
-		$api_endpoint 	= 'https://emails.youthkiawaaz.com/subscribe';
-
 		$options = get_option('yka_sendy_settings');
+
+		$sendy_url = rtrim($options['yka_sendy_url'], '/'); //trim trailing slash if present in url
+		$api_endpoint 	= $sendy_url . '/subscribe';
 
 		if (isset($options['yka_sendy_api_key'])) {
 			$data['api_key'] = $options['yka_sendy_api_key'];
