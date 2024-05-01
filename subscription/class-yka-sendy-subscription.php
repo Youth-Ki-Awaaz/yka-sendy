@@ -151,9 +151,24 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE
 
 			$user_info = get_userdata($user_id);
 
+			$location = '';
+			$gender = '';
+			$birth_year = '';
+
+			if (method_exists(YKA_USER_META::getInstance(), 'getInfo')) {
+				$user_meta = YKA_USER_META::getInstance()->getInfo($user_id);
+				$location = $user_meta['location'];
+				$gender = $user_meta['gender'];
+				$birth_year = $user_meta['birth_year'];
+			}
+
+
 			$args = array(
 				"name" 		=> $user_info->user_nicename,
 				"email"		=> $user_info->user_email,
+				"Location"  => $location,
+				"Gender"	=> $gender,
+				"BirthYear" => $birth_year,
 				'list' 		=> trim($list),
 				'boolean' 	=> 'true'
 			);
