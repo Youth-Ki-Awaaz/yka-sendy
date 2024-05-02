@@ -165,7 +165,7 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE
 
 
 			$args = array(
-				"name" 		=> $user_info->user_nicename,
+				"name" 		=> $user_info->display_name,
 				"email"		=> $user_info->user_email,
 				"Location"  => $location,
 				"Gender"	=> $gender,
