@@ -142,7 +142,7 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE
 
 	function is_user_already_synced($user_id)
 	{
-		return get_user_meta($user_id, 'sendy_synced', true);
+		return YKA_SENDY_VERSION == get_user_meta($user_id, 'sendy_synced', true) ? true : false;
 	}
 
 
