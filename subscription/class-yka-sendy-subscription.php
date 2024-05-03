@@ -115,7 +115,6 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE
 	}
 
 
-
 	function sync_with_sendy($data)
 	{
 		$options = get_option('yka_sendy_settings');
@@ -141,8 +140,24 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE
 	}
 
 
+	function is_user_already_synced($user_id)
+	{
+		return get_user_meta($user_id, 'sendy_synced', true);
+	}
+
+
+	function set_usermeta_for_synced_user($user_id)
+	{
+		add_user_meta($user_id, 'sendy_synced', YKA_SENDY_VERSION);
+	}
+
+
 	function signup_user_sync($user_id)
 	{
+		// return early if user already synced
+		if ($this->is_user_already_synced($user_id)) {
+			return;
+		}
 
 		$options = get_option('yka_sendy_settings');
 
@@ -175,6 +190,9 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE
 			);
 
 			$result = $this->sync_with_sendy($args);
+
+			//add usermeta to indicate user is synced with sendy
+			$this->set_usermeta_for_synced_user($user_id);
 		}
 	}
 
