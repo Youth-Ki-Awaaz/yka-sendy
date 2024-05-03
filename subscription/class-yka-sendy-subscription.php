@@ -126,9 +126,7 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE
 			$data['api_key'] = $options['yka_sendy_api_key'];
 		}
 
-
 		$postdata = http_build_query($data);
-
 
 		$opts = array('http' => array('method'  => 'POST', 'header'  => 'Content-type: application/x-www-form-urlencoded', 'content' => $postdata));
 
@@ -140,25 +138,8 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE
 	}
 
 
-	function is_user_already_synced($user_id)
-	{
-		return YKA_SENDY_VERSION == get_user_meta($user_id, 'sendy_synced', true) ? true : false;
-	}
-
-
-	function set_usermeta_for_synced_user($user_id)
-	{
-		add_user_meta($user_id, 'sendy_synced', YKA_SENDY_VERSION);
-	}
-
-
 	function signup_user_sync($user_id)
 	{
-		// return early if user already synced
-		if ($this->is_user_already_synced($user_id)) {
-			return;
-		}
-
 		$options = get_option('yka_sendy_settings');
 
 		if (isset($options['yka_sendy_signup_sync']) && $options['yka_sendy_signup_sync'] && !empty($options['yka_sendy_signup_list'])) {
@@ -190,9 +171,6 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE
 			);
 
 			$result = $this->sync_with_sendy($args);
-
-			//add usermeta to indicate user is synced with sendy
-			$this->set_usermeta_for_synced_user($user_id);
 		}
 	}
 
