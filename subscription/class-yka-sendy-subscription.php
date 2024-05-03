@@ -154,8 +154,16 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE
 
 			if (method_exists(YKA_USER_META::getInstance(), 'getInfo')) {
 				$user_meta = YKA_USER_META::getInstance()->getInfo($user_id);
-				$location = $user_meta['location'];
-				$gender = $user_meta['gender'];
+				//$location = $user_meta['location'];
+				//$gender = $user_meta['gender'];
+
+				$location_term = get_term_by( 'id', $user_meta['location'], 'location' );
+				$location = $location_term->name;
+
+				$genders = YKA_USER_META::getInstance()->getGenders();
+				$gender = $genders[ $user_meta[ 'gender' ] ];
+
+				//$gender = YKA_USER_META::getInstance()->getGenders()[ $user_meta['gender'] ];
 				$birth_year = $user_meta['birth_year'];
 			}
 
