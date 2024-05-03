@@ -17,7 +17,7 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE
 		add_action('wp_ajax_nopriv_yka_sendy_user_location', array($this, 'sendy_location_handler'));
 
 		//add_action('user_register', array($this, 'signup_user_sync'), 99, 1);
-		add_action('sendy_sync', array($this, 'signup_user_sync'), 99, 1);
+		add_action('yka_sendy_sync', array($this, 'signup_user_sync'), 99, 1);
 	}
 
 	function assets()
