@@ -18,6 +18,7 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE
 
 		//add_action('user_register', array($this, 'signup_user_sync'), 99, 1);
 		add_action('yka_sendy_sync', array($this, 'signup_user_sync'), 99, 1);
+		add_action('deleted_user', array($this, 'delete_from_sendy'), 99, 3);
 	}
 
 	function assets()
@@ -114,6 +115,36 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE
 		wp_die();
 	}
 
+	function delete_from_sendy($user_id, $reassign, $user)
+	{
+		$options = get_option('yka_sendy_settings');
+
+		$sendy_url = rtrim($options['yka_sendy_url'], '/');
+		$api_endpoint 	= $sendy_url . '/api/subscribers/delete.php';
+
+		$data = [];
+		if (isset($options['yka_sendy_api_key'])) {
+			$data['api_key'] = $options['yka_sendy_api_key'];
+		}
+
+		if (isset($options['yka_sendy_signup_sync']) && $options['yka_sendy_signup_sync'] && !empty($options['yka_sendy_signup_list'])) {
+
+			$data['list_id'] = $options['yka_sendy_signup_list'];
+		}
+
+		$data['email'] = $user->user_email;
+
+		$postdata = http_build_query($data);
+
+		$opts = array('http' => array('method'  => 'POST', 'header'  => 'Content-type: application/x-www-form-urlencoded', 'content' => $postdata));
+
+		$context  = stream_context_create($opts);
+
+		$result = file_get_contents($api_endpoint, false, $context);
+
+		return $result;
+	}
+
 
 	function sync_with_sendy($data)
 	{
@@ -157,11 +188,11 @@ class YKA_SENDY_SUBSCRIPTION extends YKA_SENDY_BASE
 				//$location = $user_meta['location'];
 				//$gender = $user_meta['gender'];
 
-				$location_term = get_term_by( 'id', $user_meta['location'], 'location' );
+				$location_term = get_term_by('id', $user_meta['location'], 'location');
 				$location = $location_term->name;
 
 				$genders = YKA_USER_META::getInstance()->getGenders();
-				$gender = $genders[ $user_meta[ 'gender' ] ];
+				$gender = $genders[$user_meta['gender']];
 
 				//$gender = YKA_USER_META::getInstance()->getGenders()[ $user_meta['gender'] ];
 				$birth_year = $user_meta['birth_year'];
